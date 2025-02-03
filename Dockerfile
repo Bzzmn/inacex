@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
 
 # Copia los archivos de requerimientos
 COPY pyproject.toml .
-COPY .env .
 
 # Copia el código de la aplicación
 COPY streamlit-n8n-chat/ ./streamlit-n8n-chat/
