@@ -1,6 +1,11 @@
 # Usa la imagen oficial de Python 3.12
 FROM python:3.12-slim
 
+# Establece variables de entorno
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PORT=80
+
 # Establece el directorio de trabajo
 WORKDIR /app
 
@@ -17,11 +22,11 @@ COPY pyproject.toml .
 COPY streamlit-n8n-chat/ ./streamlit-n8n-chat/
 
 # Instala pip y las dependencias
-RUN pip install --no-cache-dir pip --upgrade
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir pip --upgrade && \
+    pip install --no-cache-dir .
 
-# Expone el puerto que usa Streamlit por defecto
-EXPOSE 8501
+# Expone el puerto 80
+EXPOSE 80
 
 # Comando para ejecutar la aplicación
-CMD ["streamlit", "run", "streamlit-n8n-chat/chat_app.py", "--server.address=0.0.0.0"] 
+CMD ["streamlit", "run", "streamlit-n8n-chat/chat_app.py", "--server.address=0.0.0.0", "--server.port=80"] 
